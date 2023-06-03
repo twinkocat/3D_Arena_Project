@@ -2,12 +2,11 @@ using UnityEngine;
 
 public class PlayerMain : Unit
 {
-    public float            speed = 10;
-    public float            attackPower = 50;
-
+    public float            speed = 10f;
+    public float            attackPower;
+    public bool             isTeleported;
 
     public static PlayerMain instance; // singleton
-
 
     private void Awake()
     {
@@ -18,23 +17,26 @@ public class PlayerMain : Unit
         }
         instance = this;
 
+        attackPower = 50f;
+
         SetMaxHp(100f, true);             //... start values
         SetMaxEnergy(100f, true);         //... start values
+
+        isTeleported = false;
     }
 
-
-    protected override void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
     }
 
-    protected override void EnergyChange(float value)
+    public override void EnergyChange(float value)
     {
         base.EnergyChange(value);
     }
 
     protected override void Death()
     {
-        //.. endgame
+        Debug.Log("isDead");
     }
 }
