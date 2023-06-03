@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-
     public BarValueUpdater          heathBarUpdater;
     public BarValueUpdater          energyBarUpdater;
 
@@ -12,7 +11,7 @@ public class Unit : MonoBehaviour
     public float                    curHealth;
 
 
-    private void Start()
+    protected virtual void Start()
     {
         if (heathBarUpdater != null)
         {
@@ -26,31 +25,26 @@ public class Unit : MonoBehaviour
         }
     }
 
-    protected virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
-        if (curHealth < 0)
+        curHealth -= damage;
+        if (curHealth <= 0)
         {
             curHealth = 0;
             Death();
         }
-        else
-        {
-            curHealth -= damage;
-            heathBarUpdater.UpdateBarValue(curHealth);
-        }
+        heathBarUpdater.UpdateBarValue(curHealth);
     }
 
-    protected virtual void EnergyChange(float value)
+    public virtual void EnergyChange(float value)
     {
-        if (curEnergy < 0)
+
+        curEnergy += value + curEnergy <= maxEnergy ? value : maxEnergy - curEnergy;
+        if (curEnergy <= 0)
         {
             curEnergy = 0;
         }
-        else
-        {
-            curEnergy -= value;
-            energyBarUpdater.UpdateBarValue(curEnergy);
-        }
+        energyBarUpdater.UpdateBarValue(curEnergy);
     }
 
     protected virtual void SetMaxHp(float value, bool isInit = false)
@@ -71,5 +65,8 @@ public class Unit : MonoBehaviour
         }
     }
 
-    protected virtual void Death() { }
+    protected virtual void Death() 
+    {
+        Destroy(gameObject);
+    }
 }
