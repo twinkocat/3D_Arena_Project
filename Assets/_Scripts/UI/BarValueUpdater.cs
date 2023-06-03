@@ -5,7 +5,7 @@ public class BarValueUpdater : MonoBehaviour
 {
     private Slider _barSlider;
 
-    private void Start()
+    private void Awake()
     {
         _barSlider = GetComponent<Slider>();
     }
