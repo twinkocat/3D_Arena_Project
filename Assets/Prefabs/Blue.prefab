@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2113985653552957863}
   - component: {fileID: 8206790397557550660}
   - component: {fileID: 809424071843069266}
-  - component: {fileID: 3520833017693364363}
   - component: {fileID: -386373508229482085}
+  - component: {fileID: 3520833017693364363}
   m_Layer: 9
   m_Name: Blue
   m_TagString: Untagged
@@ -110,26 +110,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3520833017693364363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5101543641192135496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b453ad666266563489c1ff5e2007207b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heathBarUpdater: {fileID: 7188813735702738226}
-  energyBarUpdater: {fileID: 0}
-  curEnergy: 0
-  maxEnergy: 0
-  maxHealth: 0
-  curHealth: 0
-  _projectile: {fileID: 2260129816783770355, guid: 814600baeb3670944a9ffaecb7c8e132,
-    type: 3}
 --- !u!54 &-386373508229482085
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -157,6 +137,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!114 &3520833017693364363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5101543641192135496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b453ad666266563489c1ff5e2007207b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthBar: {fileID: 7188813735702738226}
+  _health: 0
+  _maxHealth: 100
+  _attackPower: 25
+  _attackDelay: 3
+  _attackRange: 0
+  _projectile: {fileID: 959049315241981232, guid: 814600baeb3670944a9ffaecb7c8e132,
+    type: 3}
+  _bounty: 50
 --- !u!1 &6042034380346361151
 GameObject:
   m_ObjectHideFlags: 0

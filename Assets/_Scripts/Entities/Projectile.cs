@@ -1,33 +1,49 @@
 using System.Collections;
 using UnityEngine;
 
+public enum TypeOfDamage
+{
+    Health = 0,
+    Energy,
+}
 
 public class Projectile : MonoBehaviour
 {
-    public GameObject           currentTarget;
-    public float                attackPower;
+    public TypeOfDamage                     TypeOfDamage;
+    public GameObject                       CurrentTarget;
+    public float                            AttackPower;
 
-    private bool                _isCollide;
-    private Vector3             _currentTargetPosition;
-    private const float         _projectileSpeed = 1f;
+    private bool                            _isCollide;
+    private Vector3                         _currentTargetPosition;
+    [SerializeField] private float          _projectileSpeed;
 
 
     private void Start()
     {
-        _isCollide = false;
         StartCoroutine(ProjectileMoving());
     }
 
     private void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.collider.tag == "Player")
+        if (collision.collider.TryGetComponent<Player>(out Player player))
         {
-            PlayerMain.instance.EnergyChange(-attackPower);
+            switch (TypeOfDamage)
+            {
+                case TypeOfDamage.Health:
+                    Player.Instance.TakeDamage(AttackPower);
+                    break;
+                case TypeOfDamage.Energy:
+                    Player.Instance.ChangeEnergyValue(-AttackPower);
+                    break;
+            }
+           
+            _isCollide = true;
             Destroy(gameObject);
         } 
-        else if (collision.collider.tag == "Environment")
+        else if (collision.collider.TryGetComponent<Environment>(out Environment environment))
         {
+            _isCollide = true;
             Destroy(gameObject);
         }
     }
@@ -36,9 +52,9 @@ public class Projectile : MonoBehaviour
     {
         while (!_isCollide)
         {
-            if (!PlayerMain.instance.isTeleported)
+            if (!Player.Instance.isTeleported)
             {
-                _currentTargetPosition = currentTarget.transform.position;
+                _currentTargetPosition = CurrentTarget.transform.position;
             }
             transform.position = Vector3.MoveTowards(transform.position, _currentTargetPosition, _projectileSpeed * Time.deltaTime);
             yield return new WaitForFixedUpdate();

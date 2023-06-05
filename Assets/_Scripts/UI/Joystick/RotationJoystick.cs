@@ -4,8 +4,7 @@ using UnityEngine.UI;
 
 public class RotationJoystick : VirtualJoystick
 {
-    public static Vector3       inputVector;
-
+    private static Vector3      _inputVector;
     private Image               _touchArea;
     private Image               _joystickBackgroundImage;
     private Image               _joystickHandle;
@@ -20,6 +19,15 @@ public class RotationJoystick : VirtualJoystick
         _defaultJoystickBackgroundImagePosition = _joystickBackgroundImage.rectTransform.anchoredPosition;
     }
 
+    public static float GetVerticalAxis()
+    {
+        return _inputVector.z;
+    }
+
+    public static float GetHorizontalAxis()
+    {
+        return _inputVector.x;
+    }
 
     override public void OnDrag(PointerEventData eventData)
     {
@@ -33,13 +41,13 @@ public class RotationJoystick : VirtualJoystick
             pos.x = (pos.x / (_joystickBackgroundImage.rectTransform.sizeDelta.x * 0.33f));  // 0.33f its a multiplier for shortly axis range
             pos.y = (pos.y / (_joystickBackgroundImage.rectTransform.sizeDelta.y * 0.33f));
 
-            inputVector = new Vector3(Mathf.Clamp(pos.x, -1f, 1f),                          // bounded -1 to 1 for comfortable rotation & movement values
+            _inputVector = new Vector3(Mathf.Clamp(pos.x, -1f, 1f),                          // bounded -1 to 1 for comfortable rotation & movement values
                                         0f,
                                         Mathf.Clamp(pos.y, -1f, 1f));
 
             _joystickHandle.rectTransform.anchoredPosition = new Vector2(
-                                                        inputVector.x * (_joystickBackgroundImage.rectTransform.sizeDelta.x * 0.33f),
-                                                        inputVector.z * (_joystickBackgroundImage.rectTransform.sizeDelta.y * 0.33f));
+                                                        _inputVector.x * (_joystickBackgroundImage.rectTransform.sizeDelta.x * 0.33f),
+                                                        _inputVector.z * (_joystickBackgroundImage.rectTransform.sizeDelta.y * 0.33f));
         }
     }
 
@@ -59,7 +67,7 @@ public class RotationJoystick : VirtualJoystick
 
     override public void OnPointerUp(PointerEventData eventData)
     {
-        inputVector = Vector3.zero;
+        _inputVector = Vector3.zero;
         _joystickBackgroundImage.rectTransform.anchoredPosition = _defaultJoystickBackgroundImagePosition;
         _joystickHandle.rectTransform.anchoredPosition = Vector2.zero;
     }

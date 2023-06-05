@@ -1,16 +1,20 @@
-using System.Collections;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _platform;
+    [SerializeField] private GameObject _platform; 
     [SerializeField] private GameObject _kamikazeEnemy;
     [SerializeField] private GameObject _bossEnemy;
+    [Space]
+    [SerializeField] private int        _numberWhenBossSpawn; // every <number> should spawn boss.
+    [SerializeField] private float      _mixSpawnDelay;
+    [SerializeField] private float      _maxSpawnDelay;
+    [SerializeField] private float      _spawnTimeReducer;
+    [SerializeField] private float      _enemySpawnHeight;
 
-    private Vector3         _targetPosition;
-    private float           _targetRadius;
-    private int             _spawnCounter;
-    private float           _spawnDelay;
+    private int                         _spawnCounter;
+    private Vector3                     _targetPosition;
+    private float                       _targetRadius;
 
     private void Awake()
     {
@@ -18,16 +22,17 @@ public class EnemySpawner : MonoBehaviour
         _targetRadius = _platform.transform.localScale.x * 0.5f;
 
         _spawnCounter = 0;
-        _spawnDelay = 5f;
+        _maxSpawnDelay = 5f;
 
-        Invoke("EnemySpawn", _spawnDelay);
+        Invoke(nameof(EnemySpawn), _maxSpawnDelay);
     }
 
+    //physics overlap
     private Vector3 GetRandomPointInArea()
     {
         Vector3 randomPoint = Random.insideUnitSphere;
         randomPoint = randomPoint * _targetRadius + _targetPosition;
-        randomPoint.y = _platform.transform.position.y + 2f;
+        randomPoint.y = _platform.transform.position.y + _enemySpawnHeight;
         return randomPoint;
     }
 
@@ -44,12 +49,10 @@ public class EnemySpawner : MonoBehaviour
             Instantiate(_kamikazeEnemy, spawnPoint, Quaternion.identity);
             _spawnCounter++;
         }
-        if (_spawnDelay > 2)
+        if (_maxSpawnDelay > _mixSpawnDelay)
         {
-            _spawnDelay -= 0.2f;
+            _maxSpawnDelay -= _spawnTimeReducer;
         }
-        Invoke("EnemySpawn", _spawnDelay);
+        Invoke(nameof(EnemySpawn), _maxSpawnDelay);
     }
-
-
 }

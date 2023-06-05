@@ -8,5 +8,4 @@ public abstract class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpH
     virtual public void OnPointerDown(PointerEventData eventData) { }
 
     virtual public void OnPointerUp(PointerEventData eventData) { }
-
 }
