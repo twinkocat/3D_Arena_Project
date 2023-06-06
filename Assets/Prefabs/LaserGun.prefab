@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e1e69fc81f9324d914925ede5bb782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _laserDuration: 0.15
+  _laserDuration: 0.35
   Points:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
