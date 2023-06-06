@@ -1,18 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static GameManager   Instance;  // Instance
+
+    public float                MAX_SENS = 120f;
+    public float                MIN_SENS = 40f;
+
+    public float                EnemyCounter;
+
+    private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(this.gameObject);
+
+
+        if (!PlayerPrefs.HasKey(nameof(SensX)))
+        {
+            PlayerPrefs.SetFloat(nameof(SensX), SensX);
+        }
+        if (!PlayerPrefs.HasKey(nameof(SensY)))
+        {
+            PlayerPrefs.SetFloat(nameof(SensY), SensY);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SaveSens(string varName, float value)
     {
-        
+        PlayerPrefs.SetFloat(varName, value);
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+
+    public float SensX
+    {
+        get { return PlayerPrefs.GetFloat(nameof(SensX)); }
+    }
+    public float SensY
+    {
+        get { return PlayerPrefs.GetFloat(nameof(SensY)); }
     }
 }
