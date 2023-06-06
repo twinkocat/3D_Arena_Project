@@ -1,5 +1,4 @@
 using Redcode.Pools;
-using System;
 using UnityEngine;
 
 public class BossEnemy : Unit, IEnemy, IAttackable, IFindTarget, IPoolObject

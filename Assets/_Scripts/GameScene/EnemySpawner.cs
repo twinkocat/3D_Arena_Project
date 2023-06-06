@@ -1,7 +1,5 @@
-using Redcode.Pools;
 using UnityEngine;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -69,6 +67,7 @@ public class EnemySpawner : MonoBehaviour
 
         clone.transform.position = GetRandomPointInArea();
         clone.OnUnitDeathFromDamage += Player.Instance.GetBounty;
+        clone.OnUnitDeathFromDamage += GameManager.Instance.CounterEnemies;
         clone.OnUnitDeath += PoolController.Instance.BackInPool;
         clone.OnUnitDeath += RemoveEnemyFromList;
 
@@ -120,8 +119,9 @@ public class EnemySpawner : MonoBehaviour
         {
             _activeEnemyList.Remove(enemy);
 
-            enemy.OnUnitDeath -= PoolController.Instance.BackInPool;
             enemy.OnUnitDeathFromDamage -= Player.Instance.GetBounty;
+            enemy.OnUnitDeath -= GameManager.Instance.CounterEnemies;
+            enemy.OnUnitDeath -= PoolController.Instance.BackInPool;
             enemy.OnUnitDeath -= RemoveEnemyFromList;
         }
     }

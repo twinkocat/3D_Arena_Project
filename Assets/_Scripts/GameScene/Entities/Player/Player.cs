@@ -1,11 +1,8 @@
 using System;
-using UnityEditor;
 using UnityEngine;
 
 public class Player : Unit, IEnergy
 {
-    public bool isTeleported;
-
     [SerializeField] private float _energy;
     [SerializeField] private float _maxEnergy;
     [SerializeField] private UnitBarValueController _energyBar;
@@ -41,6 +38,7 @@ public class Player : Unit, IEnergy
         ChangeEnergyValue(50f); // start value
 
         RicochetChance = RICOCHET_MIN_CHANCE;
+        OnHealthChanged += CalculateRicochetChance;
     }
 
     public void ChangeEnergyValue(float value)
@@ -57,31 +55,28 @@ public class Player : Unit, IEnergy
 
     public void GetBounty(Unit unit)
     {
-        Debug.Log(((IEnemy)unit).Bounty);
         ChangeEnergyValue(((IEnemy)unit).Bounty);
     }
 
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        RicochetChance = Mathf.Lerp(RICOCHET_MAX_CHANCE, RICOCHET_MIN_CHANCE, Health / MaxHealth);
     }
 
     public override void TakeHeal(float value)
     {
         base.TakeHeal(value);
-        RicochetChance = Mathf.Lerp(RICOCHET_MAX_CHANCE, RICOCHET_MIN_CHANCE, Health / MaxHealth);
     }
 
-    public override void Death() // event
+    private void CalculateRicochetChance(float health)
     {
-        Debug.Log("isDead");
+        RicochetChance = Mathf.Lerp(RICOCHET_MAX_CHANCE, RICOCHET_MIN_CHANCE, health / MaxHealth);
     }
 
     public float RicochetChance
     {
         get { return _ricochetChance; }
-        private set { _ricochetChance = value; }
+        private set { _ricochetChance = Mathf.Clamp(value, RICOCHET_MIN_CHANCE, RICOCHET_MAX_CHANCE); }
     }
 
     public float Energy

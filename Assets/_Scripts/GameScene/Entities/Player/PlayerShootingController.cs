@@ -44,6 +44,8 @@ public class PlayerShootingController : MonoBehaviour, IAttackable
         Vector3 direction = (unit.transform.position - firePoint).normalized;
         points[0] = firePoint;
         RaycastAndTakeDamage(points, direction);
+
+        Player.Instance.TakeHeal(((IEnemy)unit).Bounty); 
     }
 
     private Vector3 RaycastAndTakeDamage(Vector3[] points, Vector3 direction)

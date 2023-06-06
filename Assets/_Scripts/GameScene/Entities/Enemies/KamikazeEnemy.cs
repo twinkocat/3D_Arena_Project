@@ -16,6 +16,7 @@ public class KamikazeEnemy : Unit, IEnemy, IFindTarget, IAttackable, IPoolObject
     private GameObject              _currentTarget;
     private Vector3                 _leapHeight;
     private Vector3[]               _leapPoints;
+    private IEnumerator             _leapCoro;
 
     public void OnGettingFromPool()
     {
@@ -44,16 +45,18 @@ public class KamikazeEnemy : Unit, IEnemy, IFindTarget, IAttackable, IPoolObject
         float startTime = Time.time;
         float u = 0f;
 
-        StartCoroutine(KamikazeLeap(startTime, _leapTime, u));
+        _leapCoro = KamikazeLeap(startTime, _leapTime, u);
+        StartCoroutine(_leapCoro);
     }
 
     IEnumerator KamikazeLeap(float startTime, float moveTime, float u)
     {
+        Vector3 p01, p12;
+
         while (u < 1 && gameObject.activeInHierarchy)
         {
-            Vector3 p01, p12;
             u = Mathf.Min(((Time.time - startTime) / moveTime), 1);
-
+           
             _leapPoints[2] = _currentTarget.transform.position;
             p01 = (1 - u) * _leapPoints[0] + u * _leapPoints[1];
             p12 = (1 - u) * _leapPoints[1] + u * _leapPoints[2];

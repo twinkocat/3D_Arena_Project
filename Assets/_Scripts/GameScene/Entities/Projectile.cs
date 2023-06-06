@@ -52,10 +52,7 @@ public class Projectile : MonoBehaviour
     {
         while (!_isCollide)
         {
-            if (!Player.Instance.isTeleported)
-            {
-                _currentTargetPosition = CurrentTarget.transform.position;
-            }
+            _currentTargetPosition = CurrentTarget.transform.position;
             transform.position = Vector3.MoveTowards(transform.position, _currentTargetPosition, _projectileSpeed * Time.deltaTime);
             yield return new WaitForFixedUpdate();
         }

@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public float                MAX_SENS = 120f;
     public float                MIN_SENS = 40f;
 
-    public float                EnemyCounter;
+    private float               _counterDeadEnemies;
 
     private void Awake()
     {
@@ -45,6 +45,16 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void CounterEnemies(Unit unit)
+    {
+        EnemyCounter++;
+    }
+
+    public float EnemyCounter
+    {
+        get { return _counterDeadEnemies; }
+        private set { _counterDeadEnemies = value; }
+    }
 
     public float SensX
     {
