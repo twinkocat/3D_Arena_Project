@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 60;
-        ResetCounterEnemies();
-
         DontDestroyOnLoad(gameObject);
         
         if (Instance == null)
@@ -39,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        ResetCounterEnemies();
         SceneManager.LoadScene(1);
     }
 
