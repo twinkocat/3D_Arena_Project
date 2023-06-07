@@ -24,11 +24,11 @@ public class GameManager : MonoBehaviour
 
         if (!PlayerPrefs.HasKey(nameof(SensX)))
         {
-            PlayerPrefs.SetFloat(nameof(SensX), SensX);
+            PlayerPrefs.SetFloat(nameof(SensX), MIN_SENS);
         }
         if (!PlayerPrefs.HasKey(nameof(SensY)))
         {
-            PlayerPrefs.SetFloat(nameof(SensY), SensY);
+            PlayerPrefs.SetFloat(nameof(SensY), MIN_SENS);
         }
     }
 
