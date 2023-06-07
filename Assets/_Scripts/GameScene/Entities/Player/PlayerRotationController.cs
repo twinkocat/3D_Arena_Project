@@ -20,9 +20,10 @@ public class PlayerRotationController : MonoBehaviour
         _playerRotation += RotationJoystick.GetHorizontalAxis() * _sensitivityX * Time.deltaTime;
         _cameraRotation += -RotationJoystick.GetVerticalAxis() * _sensitivityY * Time.deltaTime;
 
+        _cameraRotation = Mathf.Clamp(_cameraRotation, -_boundCameraAngle, _boundCameraAngle);
+
         transform.rotation = Quaternion.Euler(0f, _playerRotation, 0f);
-        _playerCamera.transform.localRotation = Quaternion.Euler(
-                                        Mathf.Clamp(_cameraRotation, -_boundCameraAngle, _boundCameraAngle), 0f, 0f);
+        _playerCamera.transform.localRotation = Quaternion.Euler(_cameraRotation, 0f, 0f);
     }
 
     public static void SaveSensValues()
