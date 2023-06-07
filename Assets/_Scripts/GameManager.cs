@@ -8,17 +8,19 @@ public class GameManager : MonoBehaviour
     public float                MAX_SENS = 120f;
     public float                MIN_SENS = 40f;
 
-    private float               _counterDeadEnemies;
+    private int                 _counterCurrentDeadEnemies;
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
+        ResetCounterEnemies();
+
         DontDestroyOnLoad(gameObject);
         
         if (Instance == null)
             Instance = this;
         else
             Destroy(this.gameObject);
-
 
         if (!PlayerPrefs.HasKey(nameof(SensX)))
         {
@@ -47,19 +49,25 @@ public class GameManager : MonoBehaviour
 
     public void CounterEnemies(Unit unit)
     {
-        EnemyCounter++;
+        CurrentDeadEnemyCounter++;
     }
 
-    public float EnemyCounter
+    public void ResetCounterEnemies()
     {
-        get { return _counterDeadEnemies; }
-        private set { _counterDeadEnemies = value; }
+        CurrentDeadEnemyCounter = 0;
+    }
+
+    public int CurrentDeadEnemyCounter
+    {
+        get { return _counterCurrentDeadEnemies; }
+        private set { _counterCurrentDeadEnemies = value; }
     }
 
     public float SensX
     {
         get { return PlayerPrefs.GetFloat(nameof(SensX)); }
     }
+
     public float SensY
     {
         get { return PlayerPrefs.GetFloat(nameof(SensY)); }

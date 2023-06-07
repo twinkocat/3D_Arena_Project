@@ -18,7 +18,8 @@ public class PauseMenu : MonoBehaviour
     public void EndGame(Unit unit)
     {
         Time.timeScale = 0;
-        _counterEnemyText.text = $"Defeated {GameManager.Instance.EnemyCounter} Enemies";
+        _counterEnemyText.text = $"Defeated {GameManager.Instance.CurrentDeadEnemyCounter} Enemies";
+        GameManager.Instance.ResetCounterEnemies();
         _endGameMenu.SetActive(true);
     }
 

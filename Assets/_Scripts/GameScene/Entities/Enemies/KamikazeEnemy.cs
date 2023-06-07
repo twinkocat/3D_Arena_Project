@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using Redcode.Pools;
-using System;
 
 public class KamikazeEnemy : Unit, IEnemy, IFindTarget, IAttackable, IPoolObject
 {
@@ -20,7 +19,6 @@ public class KamikazeEnemy : Unit, IEnemy, IFindTarget, IAttackable, IPoolObject
 
     public void OnGettingFromPool()
     {
-
         _leapPoints = new Vector3[3];
         _leapHeight = new Vector3(transform.position.x,
                                     transform.position.y + _leapHeightY,
